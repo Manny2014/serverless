@@ -52,4 +52,4 @@ resources:
   Outputs:
      TestOutput:
        Description: "Some bs output"
-       Value: ${self:service}
+       Value: ${env:BULLSHIT}
