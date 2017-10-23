@@ -1,0 +1,5 @@
+{
+  "bucketName": "com.deployments.manny",
+  "cftRole": "arn:aws:iam::760316230880:role/cloudformation",
+  "lambdaRole": "arn:aws:iam::760316230880:role/lambda_basic_execution"
+}

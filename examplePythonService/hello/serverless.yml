@@ -1,0 +1,55 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+plugins:
+  - serverless-external-s3-event
+
+service: examplePythonService
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: python2.7
+  role: ${self:custom.base.lambdaRole}
+  cfnRole: ${self:custom.base.cftRole}
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  deploymentBucket:
+    name: ${self:custom.base.bucketName}
+    #serverSideEncryption: AES256 # when using server-side encryption
+
+custom:
+  base: ${file(config.${self:provider.stage}.json)}
+  custom: ${file(custom.${self:provider.stage}.json)}
+
+functions:
+  hello:
+    handler: handler.hello
+    role: ${self:custom.custom.hello.lambdaRole}
+    events:
+      - existingS3:
+          bucket: ${self:custom.custom.hello.bucketName}
+          event: s3:ObjectRemoved:*
+
+#    Define function environment variables here
+#    environment:
+#      variable2: value2
+
+# you can add CloudFormation resource templates here
+resources:
+  Outputs:
+     TestOutput:
+       Description: "Some bs output"
+       Value: ${self:service}

@@ -1,0 +1,6 @@
+{
+  "hello":{
+    "bucketName": "com.lambda.manny",
+    "lambdaRole": "arn:aws:iam::760316230880:role/lambda_basic_execution"
+  }
+}
